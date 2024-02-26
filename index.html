@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+  <link rel="preload" href="../assets/css/styles.css" as="style">
+  <link rel="stylesheet" href="../assets/css/bootstrap-basics.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+
+  <link rel="stylesheet" href="../assets/css/awesomplete.css" />
+  
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="../assets/js/scripts.js"></script>
+  <script src="../assets/js/awesomplete.js"></script>
+</head>
+<body>
+  
+  <main>
+
+    <!-- <nav>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="d-flex justify-content-center">
+              <img src="https://www.saburpwm.com/_next/image?url=%2Fmain-logo.png&w=96&q=75" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav> -->
+
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mx-auto">
+            <h1>Hey, are you sick and tired of paying <br/>your fair share in taxes?</h1>
+            <video class="header-video w-100" width="1920" height="1080" controls>
+              <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video> 
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mx-auto">
+            <div class="calculator-item">
+              <img class="w-100" src="https://via.placeholder.com/800x800" alt="">
+              <button class="button button-primary" type="button">
+                I want to save up to $5,000 in taxes!
+              </button>
+            </div>
+          </div>
+          <div class="col-md-4 mx-auto">
+            <div class="calculator-item">
+              <img class="w-100" src="https://via.placeholder.com/800x800" alt="">
+              <button class="button button-primary" type="button">
+                I want to save up to $5,000 in taxes!
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+<script>
+function showAdvanced(form_id) {
+  document.querySelector(`form[id="${form_id}"]`).querySelector('.advanced-options').classList.toggle('active');
+  document.querySelector(`form[id="${form_id}"]`).querySelector('.collapse-button').classList.toggle('active');
+}
+</script>
+
+<style>
+.collapse-button button {
+  width: 100%;
+  background-color: #f4f4f6;
+  padding: 10px 18px;
+  border-radius: 0;
+  border: 2px solid #fff;
+  text-transform: none;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+}
+
+.collapse-button button svg {
+  width: 10px;
+  height: auto;
+}
+
+.collapse-button button svg {
+  transform: rotate(0deg);
+  transition: transform .5s ease;
+}
+
+.collapse-button.active button svg {
+  transform: rotate(180deg);
+  transition: transform .5s ease;
+}
+
+.advanced-options {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height .5s ease;
+}
+
+.advanced-options.active {
+  max-height: 600px;
+  transition: max-height .5s ease;
+}
+</style>
+
+<script>
+function changeIncome(event, form_id) {
+  const form = document.querySelector(`form[id="${form_id}"]`);
+
+  form.querySelector('#ud-it-household-income').value = `${event.target.value}`;
+
+  form.querySelector('[type="submit"]').style.display = 'block';
+  form.querySelector('.button[href="#save"]').style.display = 'none';
+}
+</script>
+
+    <section>
+      <div class="container">
+        <div class="row calc-row">
+          <div class="col-md-5 mx-auto">
+            <div class="calculator-item">
+              <h4>2024 W-2 Income tax savings calculator</h4>
+              <form id="incomeTaxForm" action="" method="post" onSubmit="submitForm(event)">
+
+                <div class="form-group">
+                  <label for="ud-it-household-income">Household Income:</label>
+                    <div class="input-container">
+                      <span>$</span>
+                      <input id="ud-it-household-income" name="ud-it-household-income" type="text" value="" />
+                    </div>
+                    <input type="range" min="0" step="5000" max="10000000" value="440000" oninput="changeIncome(event, 'incomeTaxForm')">
+                </div>
+                <div class="form-group">
+                    <label for="ud-current-location">Location:</label>
+                    <input type="text" id="ud-current-location" oninput="getLocation(event.target.value, 'incomeTaxForm')" name="ud-current-location" location-input="true">
+                </div>
+                <div class="form-group">
+                    <label for="ud-married">Filing Status:</label>
+                    <select id="ud-married" name="ud-married">
+                        <option value="0">Single</option>
+                        <option value="1">Married</option> 
+                    </select>
+                </div>
+                <div class="collapse-button">
+                  <button class="button" onClick="showAdvanced('incomeTaxForm')">
+                    <span>Advanced</span>
+                    <svg width="800" height="468" viewBox="0 0 800 468" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M789.6 9.99853C776.5 -3.00146 755.3 -3.00146 742.267 9.99853L399.467 386.329L56.7344 9.99853C43.6677 -3.00146 22.4663 -3.00146 9.39961 9.99853C-3.66706 23.3319 -3.66706 44.6629 9.39961 57.6629L374.166 457.997C381.133 464.997 390.367 467.998 399.467 467.331C408.6 467.998 417.833 464.997 424.833 457.997L789.6 57.6629C802.633 44.6629 802.633 23.3319 789.6 9.99853Z" fill="black"/>
+                    </svg>                      
+                  </button>
+                </div>
+                <div class="advanced-options mb-4">
+                  <div class="form-group">
+                      <label for="ud-it-400-contribution">401k Contribution:</label>
+                      <div class="input-container">
+                        <span>$</span>
+                        <input type="number" id="ud-it-400-contribution" name="ud-it-400-contribution">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="ud-it-ira-contribution">IRA Contribution:</label>
+                      <div class="input-container">
+                        <span>$</span>
+                        <input type="number" id="ud-it-ira-contribution" name="ud-it-ira-contribution">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="ud-it-itemized-deductions">Itemized Deductions:</label>
+                      <div class="input-container">
+                        <span>$</span>
+                        <input type="number" id="ud-it-itemized-deductions" name="ud-it-itemized-deductions">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="ud-it-personal-exemptions">Number of State Personal Exemptions:</label>
+                      <input type="number" id="ud-it-personal-exemptions" name="ud-it-personal-exemptions">
+                  </div>
+                </div>
+                <button class="button button-primary w-100" type="submit" style="height: 60px">
+                  Calculate
+                </button>
+                <a class="button button-primary" href="#save" style="text-decoration: none; text-align: center; display: none">
+                  I want to save up to <span class="potential_savings">$5,000</span> in taxes!
+                </a>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-5 mx-auto">
+            <div class="calculator-item">
+              <h4>2023 1099 / K-1 Income tax savings calculator</h4>
+              <form id="incomeTaxForm_w2" action="" method="post" onSubmit="submitForm(event)">
+
+                <div class="form-group">
+                  <label for="ud-it-household-income">Household Income:</label>
+                    <div class="input-container">
+                      <span>$</span>
+                      <input id="ud-it-household-income" name="ud-it-household-income" type="text" value="" />
+                    </div>
+                    <input type="range" min="0" step="5000" max="10000000" value="440000" oninput="changeIncome(event, 'incomeTaxForm_w2')">
+                </div>
+                <div class="form-group">
+                    <label for="ud-current-location">Location:</label>
+                    <input type="text" id="ud-current-location" oninput="getLocation(event.target.value, 'incomeTaxForm_w2')" name="ud-current-location" location-input="true">
+                </div>
+                <div class="form-group">
+                    <label for="ud-married">Filing Status:</label>
+                    <select id="ud-married" name="ud-married">
+                        <option value="0">Single</option>
+                        <option value="1">Married</option> 
+                    </select>
+                </div>
+                <div class="collapse-button">
+                  <button class="button" onClick="showAdvanced('incomeTaxForm_w2')">
+                    <span>Advanced</span>
+                    <svg width="800" height="468" viewBox="0 0 800 468" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M789.6 9.99853C776.5 -3.00146 755.3 -3.00146 742.267 9.99853L399.467 386.329L56.7344 9.99853C43.6677 -3.00146 22.4663 -3.00146 9.39961 9.99853C-3.66706 23.3319 -3.66706 44.6629 9.39961 57.6629L374.166 457.997C381.133 464.997 390.367 467.998 399.467 467.331C408.6 467.998 417.833 464.997 424.833 457.997L789.6 57.6629C802.633 44.6629 802.633 23.3319 789.6 9.99853Z" fill="black"/>
+                    </svg>                      
+                  </button>
+                </div>
+                <div class="advanced-options mb-4">
+                  <div class="form-group">
+                      <label for="ud-it-400-contribution">401k Contribution:</label>
+                      <div class="input-container">
+                        <span>$</span>
+                        <input type="number" id="ud-it-400-contribution" name="ud-it-400-contribution">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="ud-it-ira-contribution">IRA Contribution:</label>
+                      <div class="input-container">
+                        <span>$</span>
+                        <input type="number" id="ud-it-ira-contribution" name="ud-it-ira-contribution">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="ud-it-itemized-deductions">Itemized Deductions:</label>
+                      <div class="input-container">
+                        <span>$</span>
+                        <input type="number" id="ud-it-itemized-deductions" name="ud-it-itemized-deductions">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="ud-it-personal-exemptions">Number of State Personal Exemptions:</label>
+                      <input type="number" id="ud-it-personal-exemptions" name="ud-it-personal-exemptions">
+                  </div>
+                </div>
+                <button class="button button-primary w-100" type="submit" style="height: 60px">
+                  Calculate
+                </button>
+                <a class="button button-primary" href="#save" style="text-decoration: none; text-align: center; display: none">
+                  I want to save up to <span class="potential_savings">$5,000</span> in taxes!
+                </a>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-5" style="display: none">
+          <div class="col-md-8 mx-auto">
+            <table class="mx-auto">
+              <tr>
+                <th class="text-left">Tax Type</th>
+                <th>Marginal Tax Rate</th>
+                <th>Effective Tax Rate</th>
+                <th>2023 Taxes*</th>
+              </tr>
+              <tr>
+                <td>Federal</td>
+                <td data-table-content="federal_marginal_tax_rate">37.00%</td>
+                <td data-table-content="federal_effective_tax_rate">35.83%</td>
+                <td data-table-content="federal_2023_taxes">$2,486,020</td>
+              </tr>
+              <tr>
+                <td>FICA</td>
+                <td data-table-content="fica_marginal_tax_rate">2.35%</td>
+                <td data-table-content="fica_effective_tax_rate">2.46%</td>
+                <td data-table-content="fica_2023_taxes">$170,728</td>
+              </tr>
+              <tr>
+                <td>State</td>
+                <td data-table-content="state_marginal_tax_rate">10.75%</td>
+                <td data-table-content="state_effective_tax_rate">10.24%</td>
+                <td data-table-content="state_2023_taxes">$710,296</td>
+              </tr>
+              <tr>
+                <td>Local</td>
+                <td data-table-content="local_marginal_tax_rate">10.75%</td>
+                <td data-table-content="local_effective_tax_rate">10.24%</td>
+                <td data-table-content="local_2023_taxes">$710,296</td>
+              </tr>
+              <tr>
+                <td>Total Income Taxes</td>
+                <td></td>
+                <td data-table-content="tit_effective_tax_rate">10.24%</td>
+                <td data-table-content="tit_2023_taxes">$710,296</td>
+              </tr>
+              <tr>
+                <td>Income After Taxes</td>
+                <td></td>
+                <td></td>
+                <td data-table-content="iat_2023_taxes">$710,296</td>
+              </tr>
+              <tr>
+                <td>Retirement Contributions</td>
+                <td></td>
+                <td></td>
+                <td data-table-content="retirement_cont_2023_taxes">$710,296</td>
+              </tr>
+              <tr>
+                <td>Take-Home Pay</td>
+                <td></td>
+                <td></td>
+                <td data-table-content="take_home_2023_taxes">$710,296</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+    function submitForm(event) {
+        console.log('Submit tax form');
+        event.preventDefault();
+
+        var form = event.target;
+        console.log('form: ', form);
+        console.log('form: ', form.querySelector('[id="ud-it-ira-contribution"]'));
+        console.log('form: ', form.parentElement);
+
+        form.querySelector('[type="submit"]').style.display = 'none';
+        form.querySelector('.button[href="#save"]').style.display = 'block';
+
+        var formData = new FormData(form);
+
+        // Transform FormData to JSON object
+        var jsonData = {};
+        formData.forEach((value, key) => {
+            jsonData[key] = value;
+        });
+
+        // Convert JSON object to JSON string
+        var jsonDataString = JSON.stringify(jsonData);
+
+        var url = "https://faas-ams3-2a2df116.doserverless.co/api/v1/namespaces/fn-2a06a388-cbbd-4e02-b0fc-0626a8194881/actions/sabur-private-wealth/smart-asset?blocking=true&result=true";
+
+        console.log(jsonDataString);
+        
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Basic MDRmYTJhZjItZGY3Yi00MDNmLWEzYTQtY2UxMjcwNmM4ODA3OjlwMmwxRHAyaFJpSkwwUVUzODJhOGpNWW1KTERHc25kS0tENWFkN1Nzc01JellVOWdUUkZUTVpKUzFwME5ZMnY="
+            },
+            body: jsonDataString
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        })
+        .then(data => {
+            const obj = JSON.parse(data.body);
+            console.log(obj);
+            const responseData = obj.data;
+
+            // Data extraction
+            var yearData2023 = responseData.page_data["2023"];
+            var federalMarginalRate = yearData2023.federalMarginalRate.toFixed(2) + "%";
+            var federalEffectiveRate = yearData2023.federalEffectiveRate.toFixed(2) + "%";
+            var federalTaxes = "$" + yearData2023.federalTax.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            var ficaMarginalRate = yearData2023.ficaMarginalRate.toFixed(2) + "%";
+            var ficaEffectiveRate = yearData2023.ficaEffectiveRate.toFixed(2) + "%";
+            var ficaTaxes = "$" + yearData2023.ficaTax.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            var stateMarginalRate = yearData2023.stateMarginalRate.toFixed(2) + "%";
+            var stateEffectiveRate = yearData2023.stateEffectiveRate.toFixed(2) + "%";
+            var stateTaxes = "$" + yearData2023.stateTax.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            var localMarginalRate = yearData2023.localMarginalRate.toFixed(2) + "%";
+            var localEffectiveRate = yearData2023.localEffectiveRate.toFixed(2) + "%";
+            var localTaxes = "$" + yearData2023.localTax.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            // var totalIncomeTaxes = "$" + yearData2023.totalIncomeTax.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            // var incomeAfterTaxes = "$" + yearData2023.incomeAfterTax.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            // var retirementContributions = "$" + yearData2023.retirementContributions.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            // var takeHomePay = "$" + yearData2023.takeHomePay.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+            // Update table cells with fetched data
+            // form.querySelector('[data-table-content="federal_marginal_tax_rate"]').textContent = federalMarginalRate;
+            // form.querySelector('[data-table-content="federal_effective_tax_rate"]').textContent = federalEffectiveRate;
+            // form.querySelector('[data-table-content="federal_2023_taxes"]').textContent = federalTaxes;
+
+            // form.querySelector('[data-table-content="fica_marginal_tax_rate"]').textContent = ficaMarginalRate;
+            // form.querySelector('[data-table-content="fica_effective_tax_rate"]').textContent = ficaEffectiveRate;
+            // form.querySelector('[data-table-content="fica_2023_taxes"]').textContent = ficaTaxes;
+
+            // form.querySelector('[data-table-content="state_marginal_tax_rate"]').textContent = stateMarginalRate;
+            // form.querySelector('[data-table-content="state_effective_tax_rate"]').textContent = stateEffectiveRate;
+            // form.querySelector('[data-table-content="state_2023_taxes"]').textContent = stateTaxes;
+
+            // form.querySelector('[data-table-content="local_marginal_tax_rate"]').textContent = localMarginalRate;
+            // form.querySelector('[data-table-content="local_effective_tax_rate"]').textContent = localEffectiveRate;
+            // form.querySelector('[data-table-content="local_2023_taxes"]').textContent = localTaxes;
+
+            // form.querySelector('[data-table-content="total_income_taxes"]').textContent = totalIncomeTaxes;
+            // form.querySelector('[data-table-content="income_after_taxes"]').textContent = incomeAfterTaxes;
+            // form.querySelector('[data-table-content="retirement_contributions"]').textContent = retirementContributions;
+            // form.querySelector('[data-table-content="take_home_pay"]').textContent = takeHomePay;
+
+
+               // Data extraction
+              var yearData2023 = responseData.page_data["2023"];
+              var totalIncomeTaxes = "$" + yearData2023.totalIncomeTax.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              var totalIncomeTaxRate = yearData2023.totalEffectiveTaxRate.toFixed(2) + "%";
+              var incomeAfterTaxes = "$" + yearData2023.incomeAfterTax.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              var retirementContributions = "$" + yearData2023.retirementContributions.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              var takeHomePay = "$" + yearData2023.takeHomePay.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+              // Update table cells with fetched data
+              
+              // form.querySelector('[data-table-content="tit_effective_tax_rate"]').textContent = totalIncomeTaxRate;
+              // form.querySelector('[data-table-content="tit_2023_taxes"]').textContent = totalIncomeTaxes;
+              // form.querySelector('[data-table-content="iat_2023_taxes"]').textContent = incomeAfterTaxes;
+              // form.querySelector('[data-table-content="retirement_cont_2023_taxes"]').textContent = retirementContributions;
+              // form.querySelector('[data-table-content="take_home_2023_taxes"]').textContent = takeHomePay;
+
+              form.parentElement.querySelector('.potential_savings').innerHTML = totalIncomeTaxes;
+        })
+        .catch(error => {
+            console.error("Error:", error.message);
+        });
+    }
+
+    document.querySelector('[name="ud-current-location"]').addEventListener('oninput', function() {
+      console.log('Change input');
+    })
+
+    function getLocation(string, form_id) {
+
+      const form = document.querySelector(`form[id="${form_id}"]`);
+
+      // Convert JSON object to JSON string
+      var jsonDataString = JSON.stringify({
+        "string": string
+      });
+
+      var url = "https://faas-ams3-2a2df116.doserverless.co/api/v1/namespaces/fn-2a06a388-cbbd-4e02-b0fc-0626a8194881/actions/sabur-private-wealth/get-locations?blocking=true&result=true";
+
+      fetch(url, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Basic MDRmYTJhZjItZGY3Yi00MDNmLWEzYTQtY2UxMjcwNmM4ODA3OjlwMmwxRHAyaFJpSkwwUVUzODJhOGpNWW1KTERHc25kS0tENWFkN1Nzc01JellVOWdUUkZUTVpKUzFwME5ZMnY="
+          },
+          body: jsonDataString
+      })
+      .then(response => {
+          if (response.ok) {
+              return response.json();
+          }
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      })
+      .then(data => {
+            const obj = JSON.parse(data.body);
+            console.log(obj);
+            let responseData = obj.data;
+            console.log(typeof(responseData));
+
+            console.log(responseData)
+            const myArray = responseData.split("\n");
+            console.log(myArray);
+
+            let locationArray = [];
+            myArray.forEach(item => {
+              locationArray.push(
+                { 
+                  label: item.split(':')[1], 
+                  value: item.split(':')[1]
+                }
+              )
+            })
+
+            var input = form.querySelector(`[location-input="true"]`);
+            console.log("input: ", input);
+            new Awesomplete(input, {
+              list: locationArray
+            });
+
+            input.focus();
+      });
+      
+    }
+
+    // document.querySelector('[name="ud-it-household-income"]').addEventListener('change', function() {
+    //   document.getElementById("incomeTaxForm").querySelector('[type="submit"]').click();
+    // });
+    </script>
+
+    <section>
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="text-left">
+              <h3>
+                To give you a high level of confidence in our services we want to offer you:
+              </h3>
+                
+              <ol>
+                <li>
+                  $2500 payment for the implementation call is FULLY REFUNDABLE*
+                </li>
+                <li>
+                  IRS audit guarantee on any tax planning
+                </li>
+                <li>
+                  ZERO net out of pocket cost for this advanced tax planning service.
+                </li>
+              </ol>
+  
+              <p>
+                In the “tax world”, most people are only aware of Tax Preparation services offered by their CPA, Accountant or software services like Turbo Tax.<br/>
+                Unlike others, the wealthy and ultra high income earners have capitalized on the highly specialized area of Tax Planning offered by Private wealth managers such as our firm and some tax attorneys to lower and or eliminate their income tax liabilities, that is the ultimate advantage we want to offer you.<br/>
+                We understand the novelty of this topic to you and perhaps a certain level of disbelief that you can also enjoy the infamous ZERO tax liability on your income and capital gains.<br/>
+                <br/>
+                Today is your opportunity to take advantage of the little known tax strategies and design your wealth like the TOP 1% affluent families in our great nation!
+              </p>
+            </div>
+          </div>
+          <div class="col-md-5 ml-auto">
+            <img src="https://www.saburpwm.com/home-7.jpg" class="w-100" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="save">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="d-flex justify-content-center">
+              <script async
+                src="https://js.stripe.com/v3/buy-button.js">
+              </script>
+              
+              <stripe-buy-button
+                buy-button-id="buy_btn_1OngbFJHWst5SOrIe3MpPxDJ"
+                publishable-key="pk_live_SmYNmCZSB66yBb0tMsPOz7Ls"
+              >
+              </stripe-buy-button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mx-auto">
+            <p>
+              <b>100% Money Back Guarantee:</b> If for any reason we are not able to identify a specific IRC code to reduce your income tax bracket by atleast 10 points, your deposit payments is fully refundable. Upon savings identification these funds will be credited to the final fees paid to Sabur Private Wealth Management.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
