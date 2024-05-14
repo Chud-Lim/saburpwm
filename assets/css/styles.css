@@ -262,8 +262,56 @@ form {
   font-weight: bold;
 }
 
+.footer {
+  display: grid;
+  width: 100%;
+}
+
+.footer-info strong {
+  display: block;
+  padding-bottom: 10px;
+  font-size: 14px;
+}
+
+footer p {
+  font-size: 12px;
+  line-height: 1.5;
+  display: block;
+}
+
+.footer-info {
+  color: white;
+  text-align: center;
+}
+
+.footer-bottom {
+  display: block;
+  padding-block: 2rem;
+  background: #00496e;
+  color: #fff;
+  width: 100%;
+}
+
+footer .wide-line {
+  width: 100%;
+  border-top: 2px solid #026192;
+}
+
 @media(max-width:768px) {
   .calc-row {
     gap: 3rem;
+  }
+
+  .footer-bottom {
+    padding-inline: 1rem;
+  }
+
+  html,
+  body,
+  main,
+  .container,
+  section {
+    width: 100%;
+    display: block;
   }
 }
