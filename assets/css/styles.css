@@ -262,9 +262,10 @@ form {
   font-weight: bold;
 }
 
-.footer {
+footer {
   display: grid;
   width: 100%;
+  
 }
 
 .footer-info strong {
@@ -289,12 +290,17 @@ footer p {
   padding-block: 2rem;
   background: #00496e;
   color: #fff;
+  background: #00496e;
   width: 100%;
 }
 
 footer .wide-line {
   width: 100%;
   border-top: 2px solid #026192;
+}
+
+#shadow-host-companion {
+  display: none !important;
 }
 
 @media(max-width:768px) {
@@ -310,8 +316,13 @@ footer .wide-line {
   body,
   main,
   .container,
-  section {
+  section,
+  footer {
     width: 100%;
     display: block;
+  }
+
+  footer{
+    padding-bottom: 3rem;
   }
 }
