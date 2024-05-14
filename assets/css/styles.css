@@ -121,7 +121,7 @@ a {
   margin: 1rem auto 2rem;
   display: block;
   text-align: center;
-  width:max-content;
+  width: max-content;
 }
 
 body {
@@ -489,6 +489,7 @@ footer .wide-line {
   align-items: center;
   justify-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 @media(max-width:768px) {
@@ -626,8 +627,9 @@ body {
 
 @media (max-width: 600px) {
   .panel {
-    padding-inline:0 !important;
+    padding-inline: 0 !important;
   }
+
   .flex-tabs {
     flex-direction: column;
 
@@ -691,9 +693,11 @@ body {
     border-bottom: 1px solid #ccc;
   }
 }
-.worko-tabs p{
-  margin-bottom:1rem;
+
+.worko-tabs p {
+  margin-bottom: 1rem;
 }
+
 /*tab 1*/
 .tax-brackets-table {
   display: grid;
@@ -765,7 +769,8 @@ body {
     border-bottom: 1px solid #ccc;
     background-color: #f9f9f9;
   }
-/*
+
+  /*
   .tax-row:nth-child(even) {
     background-color: #e9e9e9;
   }
@@ -773,7 +778,7 @@ body {
   .tax-cell {
     width: 50%;
     text-align: right;
-    font-size:12px;
+    font-size: 12px;
   }
 
   .tax-cell:first-child {
@@ -905,7 +910,7 @@ body {
 
 /*table 4*/
 .credit-table {
-  margin-top:1rem;
+  margin-top: 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 1px;
@@ -926,6 +931,7 @@ body {
   padding: 10px;
   text-align: left;
 }
+
 /*
 .credit-table .credit-cell:nth-child(odd) {
   background-color: #e9e9e9;
@@ -976,7 +982,7 @@ body {
   gap: 1px;
   background-color: #ccc;
   color: #000;
-  margin-top:1rem;
+  margin-top: 1rem;
 }
 
 .capital-gains-header {
@@ -1031,7 +1037,7 @@ body {
 /*table 6 */
 
 .business-income-table {
-  margin-top:1rem;
+  margin-top: 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1px;
@@ -1089,6 +1095,7 @@ body {
     font-weight: normal;
   }
 }
+
 /*tax continuation */
 .tax-continuation-container {
   position: relative;
@@ -1101,7 +1108,7 @@ body {
 .show-more-btn,
 .show-less-btn {
   display: none;
- text-decoration: underline;
+  text-decoration: underline;
   color: black;
   font-weight: bold;
   border: none;
@@ -1115,11 +1122,11 @@ body {
   .tax-continuation {
     display: none;
   }
-  
+
   .show-more-btn {
     display: block;
   }
-  
+
   .show-less-btn {
     display: none;
   }
