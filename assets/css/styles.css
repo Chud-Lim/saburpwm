@@ -109,8 +109,16 @@ section {
   box-sizing: border-box;
 }
 
+p {
+  margin-block: .5rem;
+}
+
 a {
   text-decoration: none;
+}
+
+strong {
+  font-weight: bold;
 }
 
 .button-new {
@@ -122,6 +130,10 @@ a {
   display: block;
   text-align: center;
   width: max-content;
+}
+
+h4 {
+  font-weight: bold;
 }
 
 body {
@@ -165,6 +177,34 @@ section {
   }
 }
 
+img {
+  display: block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.center {
+  text-align: center;
+}
+
+.p-grid {
+  margin-top:1rem;
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: .5rem;
+  font-size:15px;
+  line-height: 1.2;
+}
+.p-grid span{
+  font-size:14px;
+}
+.p-grid-left{
+  color:red;
+}
+.p-grid-right{
+  color:green;
+}
 .calculator-item {
   display: flex;
   flex-direction: column;
@@ -220,7 +260,7 @@ h3 {
   font-size: 24px;
   font-weight: 600;
   line-height: 32px;
-  margin-bottom: 20px;
+  margin-block: 20px;
 }
 
 /* Buttons */
@@ -238,6 +278,7 @@ h3 {
 .button.button-primary {
   background-color: var(--blue);
   color: #fff;
+  cursor: pointer;
 }
 
 /* Form */
@@ -291,6 +332,8 @@ form {
 .satisfaction {
   width: 100%;
   max-width: 300px;
+  margin-inline: auto;
+  display: block;
 }
 
 footer {
@@ -729,6 +772,15 @@ body {
 
 .mobile-only {
   display: none;
+
+}
+
+.desktop-only,
+.mobile-only,
+.deductions-table,
+.amt-table {
+  margin-top: 1rem;
+  width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -1129,5 +1181,24 @@ body {
 
   .show-less-btn {
     display: none;
+  }
+}
+
+.tax-planning-footer,
+.offer-grid {
+  display: grid;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  margin-top: 1rem;
+
+}
+
+@media(min-width:768px) {
+
+  .tax-planning-footer,
+  .offer-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }
